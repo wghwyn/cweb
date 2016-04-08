@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.br.cweb.mapper.ProvinceMapper">
+
+    <resultMap id="Province" type="com.br.cweb.model.Province">
+        <id property="id" column="id" jdbcType="NUMERIC" />
+        <result property="name" column="name" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="columns">
+        id, name
+    </sql>
+    
+    <sql id="dynamicWhere">
+        <where>
+            <if test="id != null"> AND id = #{id} </if>
+            <if test="name != null"> AND name LIKE #{name} </if>
+        </where>
+    </sql>
+
+    <select id="getAll" resultMap="Province">
+        SELECT
+            <include refid="columns" />
+        FROM 
+            province
+        <include refid="dynamicWhere" />
+        <!-- <if test="orderField != null and orderSeq != null">
+            ORDER BY
+                ${orderField} ${orderSeq}
+        </if>
+        <if test="start != null and offset != null">
+            LIMIT
+                ${offset}, ${pageSize}
+        </if> -->
+    </select>
+
+</mapper>
